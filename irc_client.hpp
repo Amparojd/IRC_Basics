@@ -19,6 +19,7 @@ private:
     struct sockaddr_in serverAddress;
     std::string serverAddressStr;
     int port;
+    std::string nick;
 };
 
 #endif

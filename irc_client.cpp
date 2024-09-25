@@ -22,6 +22,12 @@ void IRCClient::connectToServer() {
         std::cerr << "Conexión fallida" << std::endl;
         exit(EXIT_FAILURE);
     }
+    // Pedir el nick al usuario
+    std::cout << "Introduce tu nick: ";
+    std::getline(std::cin, nick); // Leer el nick
+
+    // Enviar el nick al servidor
+    send(clientSocket, nick.c_str(), nick.length(), 0);
     std::cout << "Conectado al servidor\n";
 }
 
@@ -33,7 +39,9 @@ void IRCClient::startChat() {
         std::cout << "Escribe un mensaje (o 'salir' para desconectar): ";
         std::getline(std::cin, message);
 
-        send(clientSocket, message.c_str(), message.length(), 0);
+        std::string messageWithNick = nick + ": " + message;
+
+        send(clientSocket, messageWithNick.c_str(), messageWithNick.length(), 0);
         if (message == "salir") {
             break;
         }
